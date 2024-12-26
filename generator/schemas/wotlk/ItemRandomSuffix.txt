@@ -1,0 +1,13 @@
+int ID
+LString name
+uint InternalName string
+int Enchantment_1
+int Enchantment_2
+int Enchantment_3
+int Enchantment_4
+int Enchantment_5
+int AllocationPct_1
+int AllocationPct_2
+int AllocationPct_3
+int AllocationPct_4
+int AllocationPct_5

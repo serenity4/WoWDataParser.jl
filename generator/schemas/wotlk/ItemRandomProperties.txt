@@ -1,0 +1,8 @@
+int id
+uint name string
+int enchantment1
+int enchantment2
+int enchantment3
+int enchantment4
+int enchantment5
+LString localizedName

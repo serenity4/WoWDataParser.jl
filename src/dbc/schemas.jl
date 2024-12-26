@@ -624,6 +624,33 @@ struct ItemExtendedCostData <: DBCDataType
     purchase_group::UInt32
 end
 
+struct ItemRandomPropertiesData <: DBCDataType
+    id::Int32
+    name::String
+    enchantment_1::Int32
+    enchantment_2::Int32
+    enchantment_3::Int32
+    enchantment_4::Int32
+    enchantment_5::Int32
+    localized_name::LString
+end
+
+struct ItemRandomSuffixData <: DBCDataType
+    id::Int32
+    name::LString
+    internal_name::String
+    enchantment_1::Int32
+    enchantment_2::Int32
+    enchantment_3::Int32
+    enchantment_4::Int32
+    enchantment_5::Int32
+    allocation_pct_1::Int32
+    allocation_pct_2::Int32
+    allocation_pct_3::Int32
+    allocation_pct_4::Int32
+    allocation_pct_5::Int32
+end
+
 struct ItemSetData <: DBCDataType
     id::UInt32
     name::LString
@@ -1691,4 +1718,4 @@ struct ZoneMusicData <: DBCDataType
 end
 
 
-export AchievementData, AchievementCategoryData, AchievementCriteriaData, AnimationDataData, AreaGroupData, AreaTableData, AreaTriggerData, CharStartOutfitData, CharTitlesData, ChatChannelsData, ChrClassesData, ChrRacesData, CinematicCameraData, CinematicSequencesData, CreatureDisplayInfoData, CreatureDisplayInfoExtraData, CreatureModelDataData, CreatureSoundDataData, CurrencyCategoryData, CurrencyTypesData, DungeonEncounterData, FactionData, FactionGroupData, FactionTemplateData, FileDataData, GameObjectDisplayInfoData, GameTipsData, GemPropertiesData, HolidayDescriptionsData, HolidayNamesData, HolidaysData, ItemData, ItemClassData, ItemDisplayInfoData, ItemExtendedCostData, ItemSetData, ItemSubClassData, LFGDungeonGroupData, LFGDungeonsData, LightData, LightFloatBandData, LightIntBandData, LightParamsData, LightSkyboxData, LoadingScreensData, LockData, LockTypeData, MapData, MapDifficultyData, MovieData, MovieFileDataData, MovieVariationData, OverrideSpellDataData, QuestSortData, ScreenEffectData, SkillLineData, SkillLineAbilityData, SkillRaceClassInfoData, SoundEntriesData, SpellData, SpellCastTimesData, SpellCategoryData, SpellDescriptionVariablesData, SpellDifficultyData, SpellDispelTypeData, SpellDurationData, SpellFocusObjectData, SpellIconData, SpellItemEnchantmentData, SpellMechanicData, SpellMissileData, SpellMissileMotionData, SpellRadiusData, SpellRangeData, SpellRuneCostData, SpellShapeshiftFormData, SpellVisualData, SpellVisualEffectNameData, SpellVisualKitData, SpellVisualKitAreaModelData, SpellVisualKitModelAttachData, SpellVisualPrecastTransitionsData, StationeryData, TalentData, TalentTabData, TaxiNodesData, TaxiPathData, TaxiPathNodeData, TotemCategoryData, VehicleData, VehicleSeatData, WMOAreaTableData, WorldStateUIData, ZoneMusicData
+export AchievementData, AchievementCategoryData, AchievementCriteriaData, AnimationDataData, AreaGroupData, AreaTableData, AreaTriggerData, CharStartOutfitData, CharTitlesData, ChatChannelsData, ChrClassesData, ChrRacesData, CinematicCameraData, CinematicSequencesData, CreatureDisplayInfoData, CreatureDisplayInfoExtraData, CreatureModelDataData, CreatureSoundDataData, CurrencyCategoryData, CurrencyTypesData, DungeonEncounterData, FactionData, FactionGroupData, FactionTemplateData, FileDataData, GameObjectDisplayInfoData, GameTipsData, GemPropertiesData, HolidayDescriptionsData, HolidayNamesData, HolidaysData, ItemData, ItemClassData, ItemDisplayInfoData, ItemExtendedCostData, ItemRandomPropertiesData, ItemRandomSuffixData, ItemSetData, ItemSubClassData, LFGDungeonGroupData, LFGDungeonsData, LightData, LightFloatBandData, LightIntBandData, LightParamsData, LightSkyboxData, LoadingScreensData, LockData, LockTypeData, MapData, MapDifficultyData, MovieData, MovieFileDataData, MovieVariationData, OverrideSpellDataData, QuestSortData, ScreenEffectData, SkillLineData, SkillLineAbilityData, SkillRaceClassInfoData, SoundEntriesData, SpellData, SpellCastTimesData, SpellCategoryData, SpellDescriptionVariablesData, SpellDifficultyData, SpellDispelTypeData, SpellDurationData, SpellFocusObjectData, SpellIconData, SpellItemEnchantmentData, SpellMechanicData, SpellMissileData, SpellMissileMotionData, SpellRadiusData, SpellRangeData, SpellRuneCostData, SpellShapeshiftFormData, SpellVisualData, SpellVisualEffectNameData, SpellVisualKitData, SpellVisualKitAreaModelData, SpellVisualKitModelAttachData, SpellVisualPrecastTransitionsData, StationeryData, TalentData, TalentTabData, TaxiNodesData, TaxiPathData, TaxiPathNodeData, TotemCategoryData, VehicleData, VehicleSeatData, WMOAreaTableData, WorldStateUIData, ZoneMusicData
