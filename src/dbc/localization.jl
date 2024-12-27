@@ -80,11 +80,11 @@ LString(locale::Symbol) = LString((locale,))
 function LString(locales::Union{Tuple, AbstractVector} = ())
   empty = ""
   mask = foldl((x, y) -> x | UInt32(DBC_LOCALE_LIST[y]), locales; init = UInt32(0))
-  LString(ntuple(_ -> empty, 16)..., mask)
+  LString(ntuple(_ -> empty, 8)..., ntuple(_ -> empty, 8)..., mask)
 end
 
-function LString(str::AbstractString, locale::Symbol = get_locale())
-  setproperties(LString(locale), NamedTuple{(locale,)}((str,)))
+function LString(str::T, locale::Symbol = get_locale()) where {T<:AbstractString}
+  setproperties(LString(locale), NamedTuple{(locale,), Tuple{T}}((str,)))::LString
 end
 
 Base.show(io::IO, lstr::LString) = print(io, 'l', sprint(show, lstr[]))
