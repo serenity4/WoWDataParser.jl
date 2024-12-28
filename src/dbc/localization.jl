@@ -91,7 +91,7 @@ Base.show(io::IO, lstr::LString) = print(io, 'l', sprint(show, lstr[]))
 
 macro l_str(ex) :(LString($(esc(ex)))) end
 
-WoWBase.query_param(x::LString) = x[]
+WoWBase.query_parameter(x::LString) = x[]
 
 Base.convert(::Type{String}, lstr::LString) = lstr[]
 Base.convert(::Type{LString}, str::AbstractString) = LString(str)
