@@ -151,15 +151,15 @@ function MPQFile(archive::MPQArchive, filename::AbstractString, hash_entry::MPQH
   MPQFile(archive, convert(String, filename), hash_entry.locale, block.flags, nothing, Ref(block), UInt8[], false)
 end
 
-function MPQFile(archive::MPQArchive, filename::AbstractString, data::AbstractVector{UInt8}; locale::Optional{MPQLocale} = nothing, flags::MPQFileFlags = MPQFileFlags(), compression::Optional{MPQCompressionFlags} = DEFAULT_COMPRESSION_METHOD, encrypt::Bool = false)
+function MPQFile(archive::MPQArchive, filename::AbstractString, data::AbstractVector{UInt8}; locale::Optional{MPQLocale} = nothing, flags::MPQFileFlags = MPQFileFlags(), compression::Optional{MPQCompressionFlags} = DEFAULT_COMPRESSION_METHOD, encrypt::Bool = false, force::Bool = false)
   lfilename = lowercase(filename)
-  haskey(archive.files, lfilename) && error("The file $(repr(filename)) already exists")
+  haskey(archive.files, lfilename) && !force && error("The file $(repr(filename)) already exists")
   flags |= MPQ_FILE_EXISTS
   !isnothing(compression) && (flags |= MPQ_FILE_COMPRESS)
   encrypt && (flags |= MPQ_FILE_ENCRYPTED)
   placeholder = MPQBlock(0xffffffff, 0xffffffff, 0xffffffff, typemax(MPQFileFlags))
   file = MPQFile(archive, filename, locale, flags, compression, Ref(placeholder), data, true)
-  insert!(archive.files, lfilename, file)
+  force ? set!(archive.files, lfilename, file) : insert!(archive.files, lfilename, file)
   file
 end
 
