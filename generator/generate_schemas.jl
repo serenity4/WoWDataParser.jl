@@ -74,7 +74,7 @@ function generate_schema_types()
       println(io, type)
       println(io)
     end
-    println(io, '\n', Expr(:export, types...))
+    println(io, '\n', "export\n       ", join(types, ",\n       "))
     @info "Schema types written to $dest"
   end
 end

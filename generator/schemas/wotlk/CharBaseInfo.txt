@@ -1,0 +1,2 @@
+uint8 race
+uint8 class

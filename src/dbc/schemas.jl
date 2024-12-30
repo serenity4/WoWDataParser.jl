@@ -102,6 +102,11 @@ struct AreaTriggerData <: DBCDataType
     box_yaw::Float32
 end
 
+struct CharBaseInfoData <: DBCDataType
+    race::UInt8
+    class::UInt8
+end
+
 struct CharStartOutfitData <: DBCDataType
     id::UInt32
     race::UInt8
@@ -1731,5 +1736,164 @@ struct ZoneMusicData <: DBCDataType
     night_music::UInt32
 end
 
+struct gtBarberShopCostBaseData <: DBCDataType
+    cost::Float32
+end
 
-export AchievementData, AchievementCategoryData, AchievementCriteriaData, AnimationDataData, AreaGroupData, AreaTableData, AreaTriggerData, CharStartOutfitData, CharTitlesData, ChatChannelsData, ChrClassesData, ChrRacesData, CinematicCameraData, CinematicSequencesData, CreatureDisplayInfoData, CreatureDisplayInfoExtraData, CreatureModelDataData, CreatureSoundDataData, CurrencyCategoryData, CurrencyTypesData, DungeonEncounterData, FactionData, FactionGroupData, FactionTemplateData, FileDataData, GameObjectDisplayInfoData, GameTipsData, GemPropertiesData, HolidayDescriptionsData, HolidayNamesData, HolidaysData, ItemData, ItemClassData, ItemDisplayInfoData, ItemExtendedCostData, ItemRandomPropertiesData, ItemRandomSuffixData, ItemSetData, ItemSubClassData, LFGDungeonGroupData, LFGDungeonsData, LightData, LightFloatBandData, LightIntBandData, LightParamsData, LightSkyboxData, LoadingScreensData, LockData, LockTypeData, MapData, MapDifficultyData, MovieData, MovieFileDataData, MovieVariationData, OverrideSpellDataData, QuestSortData, QuestXPData, ScreenEffectData, SkillLineData, SkillLineAbilityData, SkillRaceClassInfoData, SoundEntriesData, SpellData, SpellCastTimesData, SpellCategoryData, SpellDescriptionVariablesData, SpellDifficultyData, SpellDispelTypeData, SpellDurationData, SpellFocusObjectData, SpellIconData, SpellItemEnchantmentData, SpellMechanicData, SpellMissileData, SpellMissileMotionData, SpellRadiusData, SpellRangeData, SpellRuneCostData, SpellShapeshiftFormData, SpellVisualData, SpellVisualEffectNameData, SpellVisualKitData, SpellVisualKitAreaModelData, SpellVisualKitModelAttachData, SpellVisualPrecastTransitionsData, StationeryData, TalentData, TalentTabData, TaxiNodesData, TaxiPathData, TaxiPathNodeData, TotemCategoryData, VehicleData, VehicleSeatData, WMOAreaTableData, WorldStateUIData, ZoneMusicData
+struct gtChanceToMeleeCritData <: DBCDataType
+    rating::Float32
+end
+
+struct gtChanceToMeleeCritBaseData <: DBCDataType
+    rating::Float32
+end
+
+struct gtChanceToSpellCritData <: DBCDataType
+    rating::Float32
+end
+
+struct gtChanceToSpellCritBaseData <: DBCDataType
+    rating::Float32
+end
+
+struct gtCombatRatingsData <: DBCDataType
+    rating::Float32
+end
+
+struct gtNPCManaCostScalerData <: DBCDataType
+    data::Float32
+end
+
+struct gtOCTClassCombatRatingScalarData <: DBCDataType
+    id::Int32
+    rating::Float32
+end
+
+struct gtOCTRegenHPData <: DBCDataType
+    rate::Float32
+end
+
+struct gtOCTRegenMPData <: DBCDataType
+    rate::Float32
+end
+
+struct gtRegenHPPerSptData <: DBCDataType
+    rate::Float32
+end
+
+struct gtRegenMPPerSptData <: DBCDataType
+    rate::Float32
+end
+
+
+export
+       AchievementData,
+       AchievementCategoryData,
+       AchievementCriteriaData,
+       AnimationDataData,
+       AreaGroupData,
+       AreaTableData,
+       AreaTriggerData,
+       CharBaseInfoData,
+       CharStartOutfitData,
+       CharTitlesData,
+       ChatChannelsData,
+       ChrClassesData,
+       ChrRacesData,
+       CinematicCameraData,
+       CinematicSequencesData,
+       CreatureDisplayInfoData,
+       CreatureDisplayInfoExtraData,
+       CreatureModelDataData,
+       CreatureSoundDataData,
+       CurrencyCategoryData,
+       CurrencyTypesData,
+       DungeonEncounterData,
+       FactionData,
+       FactionGroupData,
+       FactionTemplateData,
+       FileDataData,
+       GameObjectDisplayInfoData,
+       GameTipsData,
+       GemPropertiesData,
+       HolidayDescriptionsData,
+       HolidayNamesData,
+       HolidaysData,
+       ItemData,
+       ItemClassData,
+       ItemDisplayInfoData,
+       ItemExtendedCostData,
+       ItemRandomPropertiesData,
+       ItemRandomSuffixData,
+       ItemSetData,
+       ItemSubClassData,
+       LFGDungeonGroupData,
+       LFGDungeonsData,
+       LightData,
+       LightFloatBandData,
+       LightIntBandData,
+       LightParamsData,
+       LightSkyboxData,
+       LoadingScreensData,
+       LockData,
+       LockTypeData,
+       MapData,
+       MapDifficultyData,
+       MovieData,
+       MovieFileDataData,
+       MovieVariationData,
+       OverrideSpellDataData,
+       QuestSortData,
+       QuestXPData,
+       ScreenEffectData,
+       SkillLineData,
+       SkillLineAbilityData,
+       SkillRaceClassInfoData,
+       SoundEntriesData,
+       SpellData,
+       SpellCastTimesData,
+       SpellCategoryData,
+       SpellDescriptionVariablesData,
+       SpellDifficultyData,
+       SpellDispelTypeData,
+       SpellDurationData,
+       SpellFocusObjectData,
+       SpellIconData,
+       SpellItemEnchantmentData,
+       SpellMechanicData,
+       SpellMissileData,
+       SpellMissileMotionData,
+       SpellRadiusData,
+       SpellRangeData,
+       SpellRuneCostData,
+       SpellShapeshiftFormData,
+       SpellVisualData,
+       SpellVisualEffectNameData,
+       SpellVisualKitData,
+       SpellVisualKitAreaModelData,
+       SpellVisualKitModelAttachData,
+       SpellVisualPrecastTransitionsData,
+       StationeryData,
+       TalentData,
+       TalentTabData,
+       TaxiNodesData,
+       TaxiPathData,
+       TaxiPathNodeData,
+       TotemCategoryData,
+       VehicleData,
+       VehicleSeatData,
+       WMOAreaTableData,
+       WorldStateUIData,
+       ZoneMusicData,
+       gtBarberShopCostBaseData,
+       gtChanceToMeleeCritData,
+       gtChanceToMeleeCritBaseData,
+       gtChanceToSpellCritData,
+       gtChanceToSpellCritBaseData,
+       gtCombatRatingsData,
+       gtNPCManaCostScalerData,
+       gtOCTClassCombatRatingScalarData,
+       gtOCTRegenHPData,
+       gtOCTRegenMPData,
+       gtRegenHPPerSptData,
+       gtRegenMPPerSptData
