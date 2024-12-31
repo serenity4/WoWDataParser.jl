@@ -71,7 +71,7 @@ function generate_schema_types()
       end
       push!(types, sname)
       type = Expr(:struct, false, :($sname <: DBCDataType), fields)
-      println(io, type)
+      println(io, "@struct_hash_equal_isequal ", type)
       println(io)
     end
     println(io, '\n', "export\n       ", join(types, ",\n       "))

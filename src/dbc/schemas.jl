@@ -2,7 +2,7 @@
 
 abstract type DBCDataType end
 
-struct AchievementData <: DBCDataType
+@struct_hash_equal_isequal struct AchievementData <: DBCDataType
     id::UInt32
     required_faction::Int32
     map_id::Int32
@@ -19,14 +19,14 @@ struct AchievementData <: DBCDataType
     ref_achievement::UInt32
 end
 
-struct AchievementCategoryData <: DBCDataType
+@struct_hash_equal_isequal struct AchievementCategoryData <: DBCDataType
     id::UInt32
     parent_category::Int32
     name::LString
     sort_order::UInt32
 end
 
-struct AchievementCriteriaData <: DBCDataType
+@struct_hash_equal_isequal struct AchievementCriteriaData <: DBCDataType
     id::UInt32
     referred_achievement::UInt32
     required_type::UInt32
@@ -44,7 +44,7 @@ struct AchievementCriteriaData <: DBCDataType
     show_order::UInt32
 end
 
-struct AnimationDataData <: DBCDataType
+@struct_hash_equal_isequal struct AnimationDataData <: DBCDataType
     id::UInt32
     name::String
     weapon_flags::UInt32
@@ -55,7 +55,7 @@ struct AnimationDataData <: DBCDataType
     behaviour_tier::UInt32
 end
 
-struct AreaGroupData <: DBCDataType
+@struct_hash_equal_isequal struct AreaGroupData <: DBCDataType
     id::UInt32
     area_id_1::UInt32
     area_id_2::UInt32
@@ -66,7 +66,7 @@ struct AreaGroupData <: DBCDataType
     next_group::UInt32
 end
 
-struct AreaTableData <: DBCDataType
+@struct_hash_equal_isequal struct AreaTableData <: DBCDataType
     id::UInt32
     map::UInt32
     zone::UInt32
@@ -89,7 +89,7 @@ struct AreaTableData <: DBCDataType
     light::UInt32
 end
 
-struct AreaTriggerData <: DBCDataType
+@struct_hash_equal_isequal struct AreaTriggerData <: DBCDataType
     id::UInt32
     continent_id::UInt32
     x::Float32
@@ -102,12 +102,12 @@ struct AreaTriggerData <: DBCDataType
     box_yaw::Float32
 end
 
-struct CharBaseInfoData <: DBCDataType
+@struct_hash_equal_isequal struct CharBaseInfoData <: DBCDataType
     race::UInt8
     class::UInt8
 end
 
-struct CharStartOutfitData <: DBCDataType
+@struct_hash_equal_isequal struct CharStartOutfitData <: DBCDataType
     id::UInt32
     race::UInt8
     class::UInt8
@@ -187,7 +187,7 @@ struct CharStartOutfitData <: DBCDataType
     inventory_type_24::Int32
 end
 
-struct CharTitlesData <: DBCDataType
+@struct_hash_equal_isequal struct CharTitlesData <: DBCDataType
     id::UInt32
     unk_1::Int32
     male_title::LString
@@ -195,7 +195,7 @@ struct CharTitlesData <: DBCDataType
     title_mask_id::Int32
 end
 
-struct ChatChannelsData <: DBCDataType
+@struct_hash_equal_isequal struct ChatChannelsData <: DBCDataType
     id::UInt32
     flags::UInt32
     faction_group::UInt32
@@ -203,7 +203,7 @@ struct ChatChannelsData <: DBCDataType
     short_name::LString
 end
 
-struct ChrClassesData <: DBCDataType
+@struct_hash_equal_isequal struct ChrClassesData <: DBCDataType
     id::UInt32
     field_01::UInt32
     display_power::UInt32
@@ -218,7 +218,7 @@ struct ChrClassesData <: DBCDataType
     required_expansion::UInt32
 end
 
-struct ChrRacesData <: DBCDataType
+@struct_hash_equal_isequal struct ChrRacesData <: DBCDataType
     id::UInt32
     flags::UInt32
     faction_id::UInt32
@@ -242,7 +242,7 @@ struct ChrRacesData <: DBCDataType
     required_expansion::UInt32
 end
 
-struct CinematicCameraData <: DBCDataType
+@struct_hash_equal_isequal struct CinematicCameraData <: DBCDataType
     id::UInt32
     file_path::String
     voiceover::UInt32
@@ -252,7 +252,7 @@ struct CinematicCameraData <: DBCDataType
     o::Float32
 end
 
-struct CinematicSequencesData <: DBCDataType
+@struct_hash_equal_isequal struct CinematicSequencesData <: DBCDataType
     id::UInt32
     sound_id::UInt32
     camera_1::UInt32
@@ -265,7 +265,7 @@ struct CinematicSequencesData <: DBCDataType
     camera_8::UInt32
 end
 
-struct CreatureDisplayInfoData <: DBCDataType
+@struct_hash_equal_isequal struct CreatureDisplayInfoData <: DBCDataType
     id::UInt32
     model_id::UInt32
     sound_id::UInt32
@@ -284,7 +284,7 @@ struct CreatureDisplayInfoData <: DBCDataType
     object_effect_package_id::UInt32
 end
 
-struct CreatureDisplayInfoExtraData <: DBCDataType
+@struct_hash_equal_isequal struct CreatureDisplayInfoExtraData <: DBCDataType
     id::UInt32
     display_race_id::UInt32
     display_sex_id::UInt32
@@ -308,7 +308,7 @@ struct CreatureDisplayInfoExtraData <: DBCDataType
     baked_texture_i_dblp::String
 end
 
-struct CreatureModelDataData <: DBCDataType
+@struct_hash_equal_isequal struct CreatureModelDataData <: DBCDataType
     id::UInt32
     flags::UInt32
     model_path::String
@@ -339,7 +339,7 @@ struct CreatureModelDataData <: DBCDataType
     missile_collision_raise::Float32
 end
 
-struct CreatureSoundDataData <: DBCDataType
+@struct_hash_equal_isequal struct CreatureSoundDataData <: DBCDataType
     id::UInt32
     sound_exertion_id::UInt32
     sound_exertion_critical_id::UInt32
@@ -380,20 +380,20 @@ struct CreatureSoundDataData <: DBCDataType
     creature_sound_data_id_pet::UInt32
 end
 
-struct CurrencyCategoryData <: DBCDataType
+@struct_hash_equal_isequal struct CurrencyCategoryData <: DBCDataType
     id::UInt32
     flags::UInt32
     name::LString
 end
 
-struct CurrencyTypesData <: DBCDataType
+@struct_hash_equal_isequal struct CurrencyTypesData <: DBCDataType
     id::UInt32
     item::UInt32
     category::UInt32
     bit_index::UInt32
 end
 
-struct DungeonEncounterData <: DBCDataType
+@struct_hash_equal_isequal struct DungeonEncounterData <: DBCDataType
     id::UInt32
     map_id::UInt32
     difficulty::UInt32
@@ -403,7 +403,7 @@ struct DungeonEncounterData <: DBCDataType
     icon_id::UInt32
 end
 
-struct FactionData <: DBCDataType
+@struct_hash_equal_isequal struct FactionData <: DBCDataType
     id::UInt32
     reputation_index::Int32
     reputation_race_mask_1::Int32
@@ -431,14 +431,14 @@ struct FactionData <: DBCDataType
     description::LString
 end
 
-struct FactionGroupData <: DBCDataType
+@struct_hash_equal_isequal struct FactionGroupData <: DBCDataType
     id::UInt32
     mask_id::Int32
     internal_name::String
     name::LString
 end
 
-struct FactionTemplateData <: DBCDataType
+@struct_hash_equal_isequal struct FactionTemplateData <: DBCDataType
     id::UInt32
     faction::Int32
     flags::Int32
@@ -455,13 +455,13 @@ struct FactionTemplateData <: DBCDataType
     friends_4::Int32
 end
 
-struct FileDataData <: DBCDataType
+@struct_hash_equal_isequal struct FileDataData <: DBCDataType
     id::UInt32
     file_name::String
     file_path::String
 end
 
-struct GameObjectDisplayInfoData <: DBCDataType
+@struct_hash_equal_isequal struct GameObjectDisplayInfoData <: DBCDataType
     id::UInt32
     model_name::String
     sound_1::UInt32
@@ -483,12 +483,12 @@ struct GameObjectDisplayInfoData <: DBCDataType
     object_effect_package_id::UInt32
 end
 
-struct GameTipsData <: DBCDataType
+@struct_hash_equal_isequal struct GameTipsData <: DBCDataType
     id::UInt32
     name::LString
 end
 
-struct GemPropertiesData <: DBCDataType
+@struct_hash_equal_isequal struct GemPropertiesData <: DBCDataType
     id::UInt32
     spell_item_enchantment_ref::UInt32
     max_countinv::UInt32
@@ -496,17 +496,17 @@ struct GemPropertiesData <: DBCDataType
     gem_type::UInt32
 end
 
-struct HolidayDescriptionsData <: DBCDataType
+@struct_hash_equal_isequal struct HolidayDescriptionsData <: DBCDataType
     id::UInt32
     description::LString
 end
 
-struct HolidayNamesData <: DBCDataType
+@struct_hash_equal_isequal struct HolidayNamesData <: DBCDataType
     id::UInt32
     name::LString
 end
 
-struct HolidaysData <: DBCDataType
+@struct_hash_equal_isequal struct HolidaysData <: DBCDataType
     id::UInt32
     duration_1::Int32
     duration_2::Int32
@@ -564,7 +564,7 @@ struct HolidaysData <: DBCDataType
     event_flags::Int32
 end
 
-struct ItemData <: DBCDataType
+@struct_hash_equal_isequal struct ItemData <: DBCDataType
     item_id::UInt32
     item_class::UInt32
     item_sub_class::UInt32
@@ -575,14 +575,14 @@ struct ItemData <: DBCDataType
     sheath_id::UInt32
 end
 
-struct ItemClassData <: DBCDataType
+@struct_hash_equal_isequal struct ItemClassData <: DBCDataType
     id::UInt32
     secondary_id::UInt32
     is_weapon::UInt32
     name::LString
 end
 
-struct ItemDisplayInfoData <: DBCDataType
+@struct_hash_equal_isequal struct ItemDisplayInfoData <: DBCDataType
     id::UInt32
     left_model::String
     right_model::String
@@ -610,7 +610,7 @@ struct ItemDisplayInfoData <: DBCDataType
     particle_color_id::UInt32
 end
 
-struct ItemExtendedCostData <: DBCDataType
+@struct_hash_equal_isequal struct ItemExtendedCostData <: DBCDataType
     id::UInt32
     cost_honour::UInt32
     cost_arena::UInt32
@@ -629,7 +629,7 @@ struct ItemExtendedCostData <: DBCDataType
     purchase_group::UInt32
 end
 
-struct ItemRandomPropertiesData <: DBCDataType
+@struct_hash_equal_isequal struct ItemRandomPropertiesData <: DBCDataType
     id::Int32
     name::String
     enchantment_1::Int32
@@ -640,7 +640,7 @@ struct ItemRandomPropertiesData <: DBCDataType
     localized_name::LString
 end
 
-struct ItemRandomSuffixData <: DBCDataType
+@struct_hash_equal_isequal struct ItemRandomSuffixData <: DBCDataType
     id::Int32
     name::LString
     internal_name::String
@@ -656,7 +656,7 @@ struct ItemRandomSuffixData <: DBCDataType
     allocation_pct_5::Int32
 end
 
-struct ItemSetData <: DBCDataType
+@struct_hash_equal_isequal struct ItemSetData <: DBCDataType
     id::UInt32
     name::LString
     item_id_1::UInt32
@@ -696,7 +696,7 @@ struct ItemSetData <: DBCDataType
     required_skill_rank::UInt32
 end
 
-struct ItemSubClassData <: DBCDataType
+@struct_hash_equal_isequal struct ItemSubClassData <: DBCDataType
     class::UInt32
     sub_class::UInt32
     prerequisite_proficiency::UInt32
@@ -711,7 +711,7 @@ struct ItemSubClassData <: DBCDataType
     verbose_name::LString
 end
 
-struct LFGDungeonGroupData <: DBCDataType
+@struct_hash_equal_isequal struct LFGDungeonGroupData <: DBCDataType
     id::UInt32
     name::LString
     order::UInt32
@@ -719,7 +719,7 @@ struct LFGDungeonGroupData <: DBCDataType
     type::UInt32
 end
 
-struct LFGDungeonsData <: DBCDataType
+@struct_hash_equal_isequal struct LFGDungeonsData <: DBCDataType
     id::UInt32
     name::LString
     min_level::UInt32
@@ -739,7 +739,7 @@ struct LFGDungeonsData <: DBCDataType
     tooltip::LString
 end
 
-struct LightData <: DBCDataType
+@struct_hash_equal_isequal struct LightData <: DBCDataType
     id::UInt32
     map_id::Int32
     pos_x::Float32
@@ -757,7 +757,7 @@ struct LightData <: DBCDataType
     params_unk_3::Int32
 end
 
-struct LightFloatBandData <: DBCDataType
+@struct_hash_equal_isequal struct LightFloatBandData <: DBCDataType
     id::UInt32
     num_entries::Int32
     time_value_1::UInt32
@@ -794,7 +794,7 @@ struct LightFloatBandData <: DBCDataType
     float_value_16::Float32
 end
 
-struct LightIntBandData <: DBCDataType
+@struct_hash_equal_isequal struct LightIntBandData <: DBCDataType
     id::UInt32
     num_entries::Int32
     time_value_1::UInt32
@@ -831,7 +831,7 @@ struct LightIntBandData <: DBCDataType
     colour_value_16::UInt32
 end
 
-struct LightParamsData <: DBCDataType
+@struct_hash_equal_isequal struct LightParamsData <: DBCDataType
     id::UInt32
     higlight_sky::UInt32
     skybox_id::UInt32
@@ -843,20 +843,20 @@ struct LightParamsData <: DBCDataType
     ocean_deep_alpha::Float32
 end
 
-struct LightSkyboxData <: DBCDataType
+@struct_hash_equal_isequal struct LightSkyboxData <: DBCDataType
     id::UInt32
     name::String
     flags::UInt32
 end
 
-struct LoadingScreensData <: DBCDataType
+@struct_hash_equal_isequal struct LoadingScreensData <: DBCDataType
     id::UInt32
     name::String
     file_name::String
     has_wide_screen::UInt32
 end
 
-struct LockData <: DBCDataType
+@struct_hash_equal_isequal struct LockData <: DBCDataType
     id::UInt32
     type_1::UInt32
     type_2::UInt32
@@ -892,7 +892,7 @@ struct LockData <: DBCDataType
     action_8::UInt32
 end
 
-struct LockTypeData <: DBCDataType
+@struct_hash_equal_isequal struct LockTypeData <: DBCDataType
     id::UInt32
     name::LString
     resource_name::LString
@@ -900,7 +900,7 @@ struct LockTypeData <: DBCDataType
     cursor_name::String
 end
 
-struct MapData <: DBCDataType
+@struct_hash_equal_isequal struct MapData <: DBCDataType
     id::UInt32
     directory_name::String
     instance_type::UInt32
@@ -921,7 +921,7 @@ struct MapData <: DBCDataType
     max_players::UInt32
 end
 
-struct MapDifficultyData <: DBCDataType
+@struct_hash_equal_isequal struct MapDifficultyData <: DBCDataType
     id::UInt32
     map::UInt32
     difficulty::Int32
@@ -931,24 +931,24 @@ struct MapDifficultyData <: DBCDataType
     difficulty_string::String
 end
 
-struct MovieData <: DBCDataType
+@struct_hash_equal_isequal struct MovieData <: DBCDataType
     id::UInt32
     movie_path::String
     volume::Int32
 end
 
-struct MovieFileDataData <: DBCDataType
+@struct_hash_equal_isequal struct MovieFileDataData <: DBCDataType
     id::UInt32
     resolution::UInt32
 end
 
-struct MovieVariationData <: DBCDataType
+@struct_hash_equal_isequal struct MovieVariationData <: DBCDataType
     id::UInt32
     movie_id::UInt32
     file_data_id::UInt32
 end
 
-struct OverrideSpellDataData <: DBCDataType
+@struct_hash_equal_isequal struct OverrideSpellDataData <: DBCDataType
     id::UInt32
     spellid_1::UInt32
     spellid_2::UInt32
@@ -963,12 +963,12 @@ struct OverrideSpellDataData <: DBCDataType
     flags::UInt32
 end
 
-struct QuestSortData <: DBCDataType
+@struct_hash_equal_isequal struct QuestSortData <: DBCDataType
     id::UInt32
     name::LString
 end
 
-struct QuestXPData <: DBCDataType
+@struct_hash_equal_isequal struct QuestXPData <: DBCDataType
     id::Int32
     difficulty_1::Int32
     difficulty_2::Int32
@@ -982,7 +982,7 @@ struct QuestXPData <: DBCDataType
     difficulty_10::Int32
 end
 
-struct ScreenEffectData <: DBCDataType
+@struct_hash_equal_isequal struct ScreenEffectData <: DBCDataType
     id::UInt32
     name::String
     type::UInt32
@@ -995,7 +995,7 @@ struct ScreenEffectData <: DBCDataType
     sound_music_id::UInt32
 end
 
-struct SkillLineData <: DBCDataType
+@struct_hash_equal_isequal struct SkillLineData <: DBCDataType
     id::UInt32
     category::UInt32
     cost_id::UInt32
@@ -1006,7 +1006,7 @@ struct SkillLineData <: DBCDataType
     can_link::UInt32
 end
 
-struct SkillLineAbilityData <: DBCDataType
+@struct_hash_equal_isequal struct SkillLineAbilityData <: DBCDataType
     id::UInt32
     skill_id::UInt32
     spell_id::UInt32
@@ -1023,7 +1023,13 @@ struct SkillLineAbilityData <: DBCDataType
     character_points_2::UInt32
 end
 
-struct SkillRaceClassInfoData <: DBCDataType
+@struct_hash_equal_isequal struct SkillLineCategoryData <: DBCDataType
+    id::UInt32
+    name::LString
+    displayorder::UInt32
+end
+
+@struct_hash_equal_isequal struct SkillRaceClassInfoData <: DBCDataType
     id::UInt32
     skill_line_dbc_record::UInt32
     race_mask::UInt32
@@ -1034,7 +1040,7 @@ struct SkillRaceClassInfoData <: DBCDataType
     skill_cost_index::UInt32
 end
 
-struct SoundEntriesData <: DBCDataType
+@struct_hash_equal_isequal struct SoundEntriesData <: DBCDataType
     id::UInt32
     sound_type::UInt32
     sound_name::String
@@ -1067,7 +1073,7 @@ struct SoundEntriesData <: DBCDataType
     sound_entries_advanced_id::UInt32
 end
 
-struct SpellData <: DBCDataType
+@struct_hash_equal_isequal struct SpellData <: DBCDataType
     id::UInt32
     category::UInt32
     dispel::UInt32
@@ -1240,24 +1246,24 @@ struct SpellData <: DBCDataType
     difficulty_id::UInt32
 end
 
-struct SpellCastTimesData <: DBCDataType
+@struct_hash_equal_isequal struct SpellCastTimesData <: DBCDataType
     id::UInt32
     casting_time::Int32
     casting_time_per_level::Int32
     minimum_casting_time::Int32
 end
 
-struct SpellCategoryData <: DBCDataType
+@struct_hash_equal_isequal struct SpellCategoryData <: DBCDataType
     id::UInt32
     flags::UInt32
 end
 
-struct SpellDescriptionVariablesData <: DBCDataType
+@struct_hash_equal_isequal struct SpellDescriptionVariablesData <: DBCDataType
     id::UInt32
     formula::String
 end
 
-struct SpellDifficultyData <: DBCDataType
+@struct_hash_equal_isequal struct SpellDifficultyData <: DBCDataType
     id::UInt32
     difficulties_1::UInt32
     difficulties_2::UInt32
@@ -1265,7 +1271,7 @@ struct SpellDifficultyData <: DBCDataType
     difficulties_4::UInt32
 end
 
-struct SpellDispelTypeData <: DBCDataType
+@struct_hash_equal_isequal struct SpellDispelTypeData <: DBCDataType
     id::UInt32
     name::LString
     combinations::UInt32
@@ -1273,24 +1279,24 @@ struct SpellDispelTypeData <: DBCDataType
     internal_name::UInt32
 end
 
-struct SpellDurationData <: DBCDataType
+@struct_hash_equal_isequal struct SpellDurationData <: DBCDataType
     id::UInt32
     base_duration::UInt32
     per_level::Int32
     maximum_duration::Int32
 end
 
-struct SpellFocusObjectData <: DBCDataType
+@struct_hash_equal_isequal struct SpellFocusObjectData <: DBCDataType
     id::UInt32
     name::LString
 end
 
-struct SpellIconData <: DBCDataType
+@struct_hash_equal_isequal struct SpellIconData <: DBCDataType
     id::UInt32
     name::String
 end
 
-struct SpellItemEnchantmentData <: DBCDataType
+@struct_hash_equal_isequal struct SpellItemEnchantmentData <: DBCDataType
     id::UInt32
     charges::UInt32
     spell_dispel_type_1::UInt32
@@ -1315,12 +1321,12 @@ struct SpellItemEnchantmentData <: DBCDataType
     required_level::UInt32
 end
 
-struct SpellMechanicData <: DBCDataType
+@struct_hash_equal_isequal struct SpellMechanicData <: DBCDataType
     id::UInt32
     name::LString
 end
 
-struct SpellMissileData <: DBCDataType
+@struct_hash_equal_isequal struct SpellMissileData <: DBCDataType
     id::UInt32
     flags::UInt32
     default_pitch_min::Float32
@@ -1338,7 +1344,7 @@ struct SpellMissileData <: DBCDataType
     collision_radius::Float32
 end
 
-struct SpellMissileMotionData <: DBCDataType
+@struct_hash_equal_isequal struct SpellMissileMotionData <: DBCDataType
     id::UInt32
     name::String
     script::String
@@ -1346,14 +1352,14 @@ struct SpellMissileMotionData <: DBCDataType
     missile_count::Int32
 end
 
-struct SpellRadiusData <: DBCDataType
+@struct_hash_equal_isequal struct SpellRadiusData <: DBCDataType
     id::UInt32
     radius::Float32
     radius_per_level::Float32
     maximum_radius::Float32
 end
 
-struct SpellRangeData <: DBCDataType
+@struct_hash_equal_isequal struct SpellRangeData <: DBCDataType
     id::UInt32
     minimum_range_hostile::Float32
     minimum_range_friend::Float32
@@ -1364,7 +1370,7 @@ struct SpellRangeData <: DBCDataType
     short_name::LString
 end
 
-struct SpellRuneCostData <: DBCDataType
+@struct_hash_equal_isequal struct SpellRuneCostData <: DBCDataType
     id::UInt32
     rune_cost_1::UInt32
     rune_cost_2::UInt32
@@ -1372,7 +1378,7 @@ struct SpellRuneCostData <: DBCDataType
     rune_power_gain::UInt32
 end
 
-struct SpellShapeshiftFormData <: DBCDataType
+@struct_hash_equal_isequal struct SpellShapeshiftFormData <: DBCDataType
     id::UInt32
     action_bar::UInt32
     name::LString
@@ -1394,7 +1400,7 @@ struct SpellShapeshiftFormData <: DBCDataType
     preset_spell_id_8::UInt32
 end
 
-struct SpellVisualData <: DBCDataType
+@struct_hash_equal_isequal struct SpellVisualData <: DBCDataType
     id::UInt32
     precast_kit::UInt32
     cast_kit::UInt32
@@ -1429,7 +1435,7 @@ struct SpellVisualData <: DBCDataType
     missile_impact_offset_z::Float32
 end
 
-struct SpellVisualEffectNameData <: DBCDataType
+@struct_hash_equal_isequal struct SpellVisualEffectNameData <: DBCDataType
     id::UInt32
     name::String
     file_path::String
@@ -1439,7 +1445,7 @@ struct SpellVisualEffectNameData <: DBCDataType
     max_allowed_scale::Float32
 end
 
-struct SpellVisualKitData <: DBCDataType
+@struct_hash_equal_isequal struct SpellVisualKitData <: DBCDataType
     id::UInt32
     start_anim_id::UInt32
     animation_id::UInt32
@@ -1480,13 +1486,13 @@ struct SpellVisualKitData <: DBCDataType
     flags::UInt32
 end
 
-struct SpellVisualKitAreaModelData <: DBCDataType
+@struct_hash_equal_isequal struct SpellVisualKitAreaModelData <: DBCDataType
     id::UInt32
     name::String
     enum_id::UInt32
 end
 
-struct SpellVisualKitModelAttachData <: DBCDataType
+@struct_hash_equal_isequal struct SpellVisualKitModelAttachData <: DBCDataType
     id::UInt32
     parent_spell_visual_kit_id::UInt32
     spell_visual_effect_name_id::UInt32
@@ -1499,20 +1505,20 @@ struct SpellVisualKitModelAttachData <: DBCDataType
     roll::Float32
 end
 
-struct SpellVisualPrecastTransitionsData <: DBCDataType
+@struct_hash_equal_isequal struct SpellVisualPrecastTransitionsData <: DBCDataType
     id::UInt32
     precast_load_anim_name::String
     precast_hold_anim_name::String
 end
 
-struct StationeryData <: DBCDataType
+@struct_hash_equal_isequal struct StationeryData <: DBCDataType
     id::UInt32
     item_id::UInt32
     texture::String
     flags::UInt32
 end
 
-struct TalentData <: DBCDataType
+@struct_hash_equal_isequal struct TalentData <: DBCDataType
     id::UInt32
     talent_tab_id::UInt32
     tier_id::UInt32
@@ -1538,7 +1544,7 @@ struct TalentData <: DBCDataType
     allow_for_pet_flags_2::UInt32
 end
 
-struct TalentTabData <: DBCDataType
+@struct_hash_equal_isequal struct TalentTabData <: DBCDataType
     id::UInt32
     name::LString
     icon_id::UInt32
@@ -1549,7 +1555,7 @@ struct TalentTabData <: DBCDataType
     background_file_name::String
 end
 
-struct TaxiNodesData <: DBCDataType
+@struct_hash_equal_isequal struct TaxiNodesData <: DBCDataType
     id::UInt32
     map::Int32
     x::Float32
@@ -1560,14 +1566,14 @@ struct TaxiNodesData <: DBCDataType
     mount_2::UInt32
 end
 
-struct TaxiPathData <: DBCDataType
+@struct_hash_equal_isequal struct TaxiPathData <: DBCDataType
     id::UInt32
     from_taxi_node::UInt32
     to_taxi_node::UInt32
     cost::UInt32
 end
 
-struct TaxiPathNodeData <: DBCDataType
+@struct_hash_equal_isequal struct TaxiPathNodeData <: DBCDataType
     id::UInt32
     path_id::UInt32
     node_index::UInt32
@@ -1581,14 +1587,14 @@ struct TaxiPathNodeData <: DBCDataType
     departure_event_id::UInt32
 end
 
-struct TotemCategoryData <: DBCDataType
+@struct_hash_equal_isequal struct TotemCategoryData <: DBCDataType
     id::UInt32
     name::LString
     category_type::UInt32
     category_mask::UInt32
 end
 
-struct VehicleData <: DBCDataType
+@struct_hash_equal_isequal struct VehicleData <: DBCDataType
     id::UInt32
     flags::UInt32
     turn_speed::Float32
@@ -1631,7 +1637,7 @@ struct VehicleData <: DBCDataType
     power_display_3::Int32
 end
 
-struct VehicleSeatData <: DBCDataType
+@struct_hash_equal_isequal struct VehicleSeatData <: DBCDataType
     id::UInt32
     flags::Int32
     attachment_id::Int32
@@ -1692,7 +1698,7 @@ struct VehicleSeatData <: DBCDataType
     camera_seat_zoom_max::Float32
 end
 
-struct WMOAreaTableData <: DBCDataType
+@struct_hash_equal_isequal struct WMOAreaTableData <: DBCDataType
     id::Int32
     wmo_id::Int32
     name_set_id::Int32
@@ -1707,7 +1713,7 @@ struct WMOAreaTableData <: DBCDataType
     name::LString
 end
 
-struct WorldStateUIData <: DBCDataType
+@struct_hash_equal_isequal struct WorldStateUIData <: DBCDataType
     id::UInt32
     map_id::UInt32
     area_id::UInt32
@@ -1725,7 +1731,7 @@ struct WorldStateUIData <: DBCDataType
     extended_ui_state_var_unk_2::UInt32
 end
 
-struct ZoneMusicData <: DBCDataType
+@struct_hash_equal_isequal struct ZoneMusicData <: DBCDataType
     id::UInt32
     name::String
     silence_min_day::UInt32
@@ -1736,52 +1742,52 @@ struct ZoneMusicData <: DBCDataType
     night_music::UInt32
 end
 
-struct gtBarberShopCostBaseData <: DBCDataType
+@struct_hash_equal_isequal struct gtBarberShopCostBaseData <: DBCDataType
     cost::Float32
 end
 
-struct gtChanceToMeleeCritData <: DBCDataType
+@struct_hash_equal_isequal struct gtChanceToMeleeCritData <: DBCDataType
     rating::Float32
 end
 
-struct gtChanceToMeleeCritBaseData <: DBCDataType
+@struct_hash_equal_isequal struct gtChanceToMeleeCritBaseData <: DBCDataType
     rating::Float32
 end
 
-struct gtChanceToSpellCritData <: DBCDataType
+@struct_hash_equal_isequal struct gtChanceToSpellCritData <: DBCDataType
     rating::Float32
 end
 
-struct gtChanceToSpellCritBaseData <: DBCDataType
+@struct_hash_equal_isequal struct gtChanceToSpellCritBaseData <: DBCDataType
     rating::Float32
 end
 
-struct gtCombatRatingsData <: DBCDataType
+@struct_hash_equal_isequal struct gtCombatRatingsData <: DBCDataType
     rating::Float32
 end
 
-struct gtNPCManaCostScalerData <: DBCDataType
+@struct_hash_equal_isequal struct gtNPCManaCostScalerData <: DBCDataType
     data::Float32
 end
 
-struct gtOCTClassCombatRatingScalarData <: DBCDataType
+@struct_hash_equal_isequal struct gtOCTClassCombatRatingScalarData <: DBCDataType
     id::Int32
     rating::Float32
 end
 
-struct gtOCTRegenHPData <: DBCDataType
+@struct_hash_equal_isequal struct gtOCTRegenHPData <: DBCDataType
     rate::Float32
 end
 
-struct gtOCTRegenMPData <: DBCDataType
+@struct_hash_equal_isequal struct gtOCTRegenMPData <: DBCDataType
     rate::Float32
 end
 
-struct gtRegenHPPerSptData <: DBCDataType
+@struct_hash_equal_isequal struct gtRegenHPPerSptData <: DBCDataType
     rate::Float32
 end
 
-struct gtRegenMPPerSptData <: DBCDataType
+@struct_hash_equal_isequal struct gtRegenMPPerSptData <: DBCDataType
     rate::Float32
 end
 
@@ -1848,6 +1854,7 @@ export
        ScreenEffectData,
        SkillLineData,
        SkillLineAbilityData,
+       SkillLineCategoryData,
        SkillRaceClassInfoData,
        SoundEntriesData,
        SpellData,
