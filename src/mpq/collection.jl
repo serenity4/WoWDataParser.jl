@@ -70,17 +70,24 @@ function MPQCollection(files)
   archives = MPQArchive.(files)
   file_sources = Dictionary{String, typeof(archives[1])}()
   for archive in archives
+    regenerate_filenames!(archive)
     list = listfile(archive)
     isnothing(list) && continue
     for file in list
-      get!(file_sources, file, archive)
+      get!(file_sources, canonicalize(file), archive)
     end
   end
   sortkeys!(file_sources)
   MPQCollection(archives, file_sources)
 end
 
-listfile(collection::MPQCollection) = keys(collection.file_sources)
+function listfile(collection::MPQCollection)
+  list = String[]
+  for (lfilename, archive) in pairs(collection.file_sources)
+    push!(list, archive.filenames[lfilename])
+  end
+  list
+end
 
 function Base.show(io::IO, collection::MPQCollection)
   print(io, MPQCollection, " (")
@@ -99,7 +106,7 @@ function Base.show(io::IO, mime::MIME"text/plain", collection::MPQCollection)
 end
 
 function MPQFile(collection::MPQCollection, filename::AbstractString)
-  archive = get(collection.file_sources, lowercase(filename), nothing)
+  archive = get(collection.file_sources, canonicalize(filename), nothing)
   isnothing(archive) && error("No file named $(repr(filename)) exists in this collection.")
   MPQFile(archive, filename)
 end

@@ -126,13 +126,16 @@ mutable struct MPQArchive{IO<:Base.IO}
   const block_table::MPQBlockTable
   const sector_size::Int
   const files::Dictionary{String, MPQFile{MPQArchive{IO}}}
+  const filenames::Dictionary{String, String}
+  const created::Bool
 end
 
 function MPQArchive(; max_files = 4096, sector_size = 4096)
   ispow2(sector_size) || error("Sector size must be a power of two.")
-  MPQArchive(IOBuffer(), MPQHashTable(max_files), MPQBlockTable(), sector_size)
+  MPQArchive(IOBuffer(), MPQHashTable(max_files), MPQBlockTable(), sector_size, true)
 end
-MPQArchive(io, ht, bt, sector_size) = MPQArchive(io, ht, bt, sector_size, Dictionary{String, MPQFile{MPQArchive{typeof(io)}}}())
+
+MPQArchive(io, ht, bt, sector_size, created = false) = MPQArchive(io, ht, bt, sector_size, Dictionary{String, MPQFile{MPQArchive{typeof(io)}}}(), Dictionary{String,String}(), created)
 
 function Base.show(io::IO, archive::MPQArchive)
   print(io, MPQArchive, " (")
@@ -152,13 +155,15 @@ function MPQFile(archive::MPQArchive, filename::AbstractString, hash_entry::MPQH
 end
 
 function MPQFile(archive::MPQArchive, filename::AbstractString, data::AbstractVector{UInt8}; locale::Optional{MPQLocale} = nothing, flags::MPQFileFlags = MPQFileFlags(), compression::Optional{MPQCompressionFlags} = DEFAULT_COMPRESSION_METHOD, encrypt::Bool = false, force::Bool = false)
-  lfilename = lowercase(filename)
+  lfilename = canonicalize(filename)
   haskey(archive.files, lfilename) && !force && error("The file $(repr(filename)) already exists")
   flags |= MPQ_FILE_EXISTS
   !isnothing(compression) && (flags |= MPQ_FILE_COMPRESS)
   encrypt && (flags |= MPQ_FILE_ENCRYPTED)
   placeholder = MPQBlock(0xffffffff, 0xffffffff, 0xffffffff, typemax(MPQFileFlags))
-  file = MPQFile(archive, filename, locale, flags, compression, Ref(placeholder), data, true)
+  isempty(archive.filenames) && filename ≠ "(listfile)" && regenerate_filenames!(archive)
+  afilename = get(archive.filenames, lfilename, filename)
+  file = MPQFile(archive, afilename, locale, flags, compression, Ref(placeholder), data, true)
   force ? set!(archive.files, lfilename, file) : insert!(archive.files, lfilename, file)
   file
 end

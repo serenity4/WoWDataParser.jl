@@ -1,8 +1,10 @@
 function listfile(archive::MPQArchive)
-  file = find_file(archive, "(listfile)")
+  filename = "(listfile)"
+  file = get(archive.files, filename, nothing)
+  isnothing(file) && (file = find_file(archive, filename))
   isnothing(file) && return nothing
   data = read(file)
-  split(replace(lowercase(String(data)), '\\' => '/'), in(('\r', '\n', ';')); keepempty = false)
+  split(replace(String(data), '\\' => '/'), in(('\r', '\n', ';')); keepempty = false)
 end
 
 Base.getindex(archive::MPQArchive, filename::AbstractString) = MPQFile(archive, filename)
@@ -11,12 +13,27 @@ Base.get(archive::MPQArchive, filename::AbstractString, default) = something(fin
 # TODO: Preserve listfile entries for blocks we will be rewriting without modification.
 function regenerate_listfile!(archive::MPQArchive)
   filename = "(listfile)"
-  haskey(archive.files, filename) && delete!(archive.files, filename)
-  list = join(keys(archive.files), '\n')
   io = IOBuffer()
-  write(io, list)
+  for file in archive.files
+    write(io, file.filename, '\n')
+  end
   seekstart(io)
   bytes = take!(io)
-  MPQFile(archive, filename, bytes; locale = MPQ_LOCALE_NEUTRAL)
+  file = MPQFile(archive, filename, bytes; locale = MPQ_LOCALE_NEUTRAL)
   archive
+end
+
+canonicalize(filename) = lowercase(replace(filename, '\\' => '/'))
+
+function regenerate_filenames!(archive::MPQArchive)
+  list = listfile(archive)
+  if isnothing(list)
+    !archive.created && @warn "No listfile found in this archive"
+    # Insert an entry here to avoid regenerating filenames again and again.
+    insert!(archive.filenames, "no listfile", "NO LISTFILE")
+    return
+  end
+  for filename in list
+    insert!(archive.filenames, canonicalize(filename), filename)
+  end
 end

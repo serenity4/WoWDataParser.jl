@@ -87,12 +87,14 @@ function find_file(archive::MPQArchive, filename::AbstractString)
 end
 
 function MPQFile(archive::MPQArchive, filename::AbstractString)
-  lfilename = lowercase(filename)
-  file = get(archive.files, lfilename, nothing)
-  !isnothing(file) && return @set file.filename = filename
-  file = find_file(archive, filename)
+  lfilename = canonicalize(filename)
+  isempty(archive.filenames) && regenerate_filenames!(archive)
+  afilename = get(archive.filenames, lfilename, filename)
+  file = get(archive.files, afilename, nothing)
+  !isnothing(file) && return file
+  file = find_file(archive, afilename)
   isnothing(file) && error("No file named '$filename' exists in this archive")
-  insert!(archive.files, lfilename, file)
+  insert!(archive.files, afilename, file)
   file
 end
 

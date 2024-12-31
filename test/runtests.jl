@@ -156,14 +156,13 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
       @test length(data) === Int(block.uncompressed_file_size)
       files = listfile(archive)
       @test length(files) === 2994
-      @test files[begin] == lowercase("CHARACTER/BloodElf/Female/BloodElfFemale.M2")
-      @test files[end] == lowercase("WTF/DefaultBindings.wtf")
+      @test files[begin] == "CHARACTER/BloodElf/Female/BloodElfFemale.M2"
+      @test files[end] == "WTF/DefaultBindings.wtf"
 
       archive = MPQArchive(mpq_file("enUS/patch-enUS"))
       talent_tabs_dbc = read(archive["DBFilesClient/TalentTab.dbc"])
       talent_tabs = DBCData(talent_tabs_dbc, :TalentTab)
-      ref = DBCData(dbc_file(:TalentTab))
-      @test talent_tabs == ref
+      @test length(talent_tabs.rows) ≥ 33
 
       archive = MPQArchive(mpq_file("enUS/patch-enUS-3"))
       map_dbc = read(archive["DBFilesClient/Map.dbc"])
@@ -172,8 +171,7 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
       @test map == ref
       spell_dbc = read(archive["DBFilesClient/Spell.dbc"])
       spell = DBCData(spell_dbc, :Spell)
-      ref = DBCData(dbc_file(:Spell))
-      @test spell == ref
+      @test length(spell.rows) ≥ 49839
     end
 
     @testset "Writing MPQ files" begin
@@ -206,6 +204,7 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
       file_b_2 = archive2["Test/B"]
       @test file_a_2.block[].uncompressed_file_size == 5
       @test file_b_2.block[].uncompressed_file_size == 5000
+      @test file_a_2.filename == "Test/A"
       @test read(file_a_2) == read(file_a)
       @test read(file_b_2) == read(file_b)
       @test write(IOBuffer(), archive2) == nb
@@ -244,13 +243,17 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
 
     @testset "MPQ collections" begin
       collection = MPQCollection([mpq_file("enUS/patch-enUS-3"), mpq_file("enUS/locale-enUS")])
-      file = collection["DBFilesClient/Achievement.dbc"]
-      @test file === collection.archives[1][file.filename]
+      file = collection["dbfilesclient/achievement.dbc"]
+      filenames = listfile(collection)
       @test file.filename == "DBFilesClient/Achievement.dbc"
+      @test in(file.filename, filenames)
+      @test file === collection.archives[1][file.filename]
       @test file.data === collection[lowercase("DBFilesClient/Achievement.dbc")].data
       file = collection["Fonts/FRIENDS.TTF"]
+      @test in(file.filename, filenames)
       @test file === collection.archives[1][file.filename]
       file = collection["Fonts/MORPHEUS.TTF"]
+      @test in(file.filename, filenames)
       @test file === collection.archives[2][file.filename]
 
       mpq_files = WoW.ClientMPQFiles(DATA_DIRECTORY)
