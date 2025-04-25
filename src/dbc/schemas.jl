@@ -963,6 +963,11 @@ end
     flags::UInt32
 end
 
+@struct_hash_equal_isequal struct QuestInfoData <: DBCDataType
+    id::Int32
+    info::LString
+end
+
 @struct_hash_equal_isequal struct QuestSortData <: DBCDataType
     id::UInt32
     name::LString
@@ -1849,6 +1854,7 @@ export
        MovieFileDataData,
        MovieVariationData,
        OverrideSpellDataData,
+       QuestInfoData,
        QuestSortData,
        QuestXPData,
        ScreenEffectData,
