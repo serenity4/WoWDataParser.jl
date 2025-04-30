@@ -24,7 +24,11 @@ end
 
 function find_string(strings, indices, char_index)
   i = get(indices, char_index, nothing)
-  isnothing(i) && error("Could not find string at index $char_index")
+  if isnothing(i)
+    # Perhaps the index is stored, and not an offset?
+    i = get(indices, char_index - 1, nothing)
+    isnothing(i) && error("Could not find string at index $char_index")
+  end
   strings[i]
 end
 

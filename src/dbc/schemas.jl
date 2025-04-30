@@ -902,14 +902,14 @@ end
 
 @struct_hash_equal_isequal struct MapData <: DBCDataType
     id::UInt32
-    directory_name::String
+    directory::String
     instance_type::UInt32
     flags::UInt32
     pvp::UInt32
-    map_name_lang::LString
+    name::LString
     area_table_id::UInt32
-    map_description_0_lang::LString
-    map_description_1_lang::LString
+    description_alliance::LString
+    description_horde::LString
     loading_screen_id::UInt32
     minimap_icon_scale::Float32
     corpse_map_id::Int32
