@@ -24,6 +24,7 @@ function generate_schema_types()
     types = Symbol[]
     println(io, "# This file was automatically generated with `generator/generate_schemas.jl`.\n")
     println(io, "abstract type DBCDataType end\n")
+    println(io, "Base.broadcastable(x::DBCDataType) = Ref(x)\n")
     for file in readdir(schema_directory(); join = true)
       schema_name = first(splitext(basename(file)))
       sname = schema_type(schema_name)

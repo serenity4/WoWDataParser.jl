@@ -2,6 +2,8 @@
 
 abstract type DBCDataType end
 
+Base.broadcastable(x::DBCDataType) = Ref(x)
+
 @struct_hash_equal_isequal struct AchievementData <: DBCDataType
     id::UInt32
     required_faction::Int32
