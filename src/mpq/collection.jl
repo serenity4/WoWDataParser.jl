@@ -61,9 +61,12 @@ function files_sorted_by_priority((; files, locale_files, locale_folder)::Client
   list
 end
 
-function MPQCollection(data_directory::AbstractString)
+function MPQCollection(data_directory::AbstractString; filter::Optional{Function} = nothing)
   files = ClientMPQFiles(data_directory)
-  MPQCollection(joinpath.(data_directory, files_sorted_by_priority(files)))
+  files = files_sorted_by_priority(files)
+  filter !== nothing && filter!(filter, files)
+  files = joinpath.(data_directory, files)
+  MPQCollection(files)
 end
 
 function MPQCollection(files)
