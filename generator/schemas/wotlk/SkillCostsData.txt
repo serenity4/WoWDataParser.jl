@@ -1,0 +1,5 @@
+uint id
+uint skillCostId
+uint cost1
+uint cost2
+uint cost3

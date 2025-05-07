@@ -1002,6 +1002,14 @@ end
     sound_music_id::UInt32
 end
 
+@struct_hash_equal_isequal struct SkillCostsDataData <: DBCDataType
+    id::UInt32
+    skill_cost_id::UInt32
+    cost_1::UInt32
+    cost_2::UInt32
+    cost_3::UInt32
+end
+
 @struct_hash_equal_isequal struct SkillLineData <: DBCDataType
     id::UInt32
     category::UInt32
@@ -1045,6 +1053,42 @@ end
     min_level::UInt32
     skill_tier_id::UInt32
     skill_cost_index::UInt32
+end
+
+@struct_hash_equal_isequal struct SkillTiersData <: DBCDataType
+    id::UInt32
+    cost_1::UInt32
+    cost_2::UInt32
+    cost_3::UInt32
+    cost_4::UInt32
+    cost_5::UInt32
+    cost_6::UInt32
+    cost_7::UInt32
+    cost_8::UInt32
+    cost_9::UInt32
+    cost_10::UInt32
+    cost_11::UInt32
+    cost_12::UInt32
+    cost_13::UInt32
+    cost_14::UInt32
+    cost_15::UInt32
+    cost_16::UInt32
+    value_1::UInt32
+    value_2::UInt32
+    value_3::UInt32
+    value_4::UInt32
+    value_5::UInt32
+    value_6::UInt32
+    value_7::UInt32
+    value_8::UInt32
+    value_9::UInt32
+    value_10::UInt32
+    value_11::UInt32
+    value_12::UInt32
+    value_13::UInt32
+    value_14::UInt32
+    value_15::UInt32
+    value_16::UInt32
 end
 
 @struct_hash_equal_isequal struct SoundEntriesData <: DBCDataType
@@ -1860,10 +1904,12 @@ export
        QuestSortData,
        QuestXPData,
        ScreenEffectData,
+       SkillCostsDataData,
        SkillLineData,
        SkillLineAbilityData,
        SkillLineCategoryData,
        SkillRaceClassInfoData,
+       SkillTiersData,
        SoundEntriesData,
        SpellData,
        SpellCastTimesData,
