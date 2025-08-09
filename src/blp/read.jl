@@ -126,7 +126,12 @@ function read_blp_images(io, width, height, compression, alpha_depth, pixel_form
         offset_y = 4(y - 1)
         for x in 1:sx
           offset_x = 4(x - 1)
-          alpha_block = read(io, UInt64)
+          p = position(io)
+          alpha_block = try
+            read(io, UInt64)
+          catch EOFError
+            @goto next # assume the rest is zero
+          end
           alpha_a = (alpha_block & 0xff) / 255
           alpha_b = ((alpha_block & 0xff00) >> 8) / 255
           alpha_bits = alpha_block >> 16
@@ -157,6 +162,7 @@ function read_blp_images(io, width, height, compression, alpha_depth, pixel_form
     else
       error("Unsupported compression format $compression with pixel format $pixel_format")
     end
+    @label next
   end
   images
 end

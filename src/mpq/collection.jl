@@ -70,7 +70,14 @@ function MPQCollection(data_directory::AbstractString; filter::Optional{Function
 end
 
 function MPQCollection(files)
-  archives = MPQArchive.(files)
+  archives = map(files) do file
+    try
+      MPQArchive(file)
+    catch
+      @error "Error while parsing MPQ file $file"
+      rethrow()
+    end
+  end
   file_sources = Dictionary{String, typeof(archives[1])}()
   for archive in archives
     regenerate_filenames!(archive)

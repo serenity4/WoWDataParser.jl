@@ -352,6 +352,11 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
         icon = collection["Interface/Icons/Ability_Rogue_Shadowstep.blp"]
         file = BLPFile(read(icon))
         @test file.image[42, 18] === RGBA{N0f8}(0.427, 0.161, 0.847, 1.0)
+
+        image = collection["Interface/AchievementFrame/UI-Achievement-MetalBorder-Left.blp"]
+        file = BLPFile(read(image))
+        @test length(file.mipmaps) == 4
+        @test file.image[4, 24] === RGBA{N0f8}(0.753, 0.753, 0.69, 1.0)
       end
 
       @testset "No compression" begin
