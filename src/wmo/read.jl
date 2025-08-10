@@ -15,10 +15,10 @@ function Base.read(io::BinaryIO, ::Type{WMOFile})
 end
 
 function parse_chunk_sizes(io::IO)
-  sizes = Dictionary{Tag4,Int}()
+  sizes = Dictionary{Tag4,Int64}()
   while !eof(io)
     chunk = Tag4(bswap(read(io, UInt32)))
-    size = Int(read(io, UInt32))
+    size = Int64(read(io, UInt32))
     insert!(sizes, chunk, size)
     skip(io, size)
   end
@@ -27,10 +27,10 @@ end
 
 function Base.read(wmo::WMOFile, chunk::Tag4)
   data = wmo.data[chunk]
-  data !== nothing && return data
+  data !== NoData() && return data
   read_chunk!(wmo, chunk)
   data = wmo.data[chunk]
-  @assert data !== nothing
+  @assert data !== NoData()
   return data
 end
 
@@ -42,7 +42,12 @@ function read_chunk(wmo::WMOFile, chunk::Tag4)
   wmo.sizes[chunk] == 0 && return missing
   seek_chunk(wmo, chunk)
   chunk === tag"MOHD" && return read(wmo.io, WMOHeader)
-  chunk === tag"MOTX" && return read_textures(wmo)
+  chunk === tag"MOTX" && return read_textures(wmo)::Vector{String}
+  chunk === tag"MOGI" && return read_groups(wmo)::Vector{WMOGroup}
+  chunk === tag"MOGN" && return read_group_names(wmo)::Vector{String}
+  chunk === tag"MOSB" && return read_skybox(wmo)::Optional{String}
+  chunk === tag"MODS" && return read_doodad_sets(wmo)::Vector{DoodadSet}
+  chunk === tag"MFOG" && return read_fog_infos(wmo)::Vector{FogInfo}
   @warn "Parsing not implemented for chunk $chunk"
   return missing
 end
@@ -69,9 +74,53 @@ function read_textures(wmo::WMOFile)
   return filenames
 end
 
-function read_texture(wmo::WMOFile, offset::Int)
+function read_texture(wmo::WMOFile, offset::Int64)
   seek_chunk(wmo, tag"MOTX")
-  seek(wmo.io, position(wmo.io) + offset)
+  skip(wmo.io, offset)
   while peek(wmo.io, UInt8) == 0 skip(wmo.io, 1) end
   return read_null_terminated_string(wmo.io)
+end
+
+function read_group_name(wmo::WMOFile, offset::Int64)
+  seek_chunk(wmo, tag"MOGN")
+  skip(wmo.io, offset)
+  while peek(wmo.io, UInt8) == 0 skip(wmo.io, 1) end
+  return read_null_terminated_string(wmo.io)
+end
+
+function read_group_names(wmo::WMOFile)
+  names = String[]
+  start = position(wmo.io)
+  size = wmo.sizes[tag"MOGN"]
+  while position(wmo.io) < start + size
+    while peek(wmo.io, UInt8) == 0 skip(wmo.io, 1) end
+    position(wmo.io) < start + size || break
+    name = read_null_terminated_string(wmo.io)
+    push!(names, name)
+  end
+  return names
+end
+
+function read_groups(wmo::WMOFile)
+  seek_chunk(wmo, tag"MOGI")
+  n = fld(wmo.sizes[tag"MOGI"], 32)
+  return [read(wmo.io, WMOGroup) for _ in 1:n]
+end
+
+function read_skybox(wmo::WMOFile)
+  seek_chunk(wmo, tag"MOSB")
+  peek(wmo.io, UInt8) == 0 && return nothing
+  return read_null_terminated_string(wmo.io)
+end
+
+function read_doodad_sets(wmo::WMOFile)
+  seek_chunk(wmo, tag"MODS")
+  n = fld(wmo.sizes[tag"MODS"], 32)
+  return [read(wmo.io, DoodadSet) for _ in 1:n]
+end
+
+function read_fog_infos(wmo::WMOFile)
+  seek_chunk(wmo, tag"MFOG")
+  n = fld(wmo.sizes[tag"MFOG"], 48)
+  return [read(wmo.io, FogInfo) for _ in 1:n]
 end

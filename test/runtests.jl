@@ -3,7 +3,7 @@ using WoWDataParser: RGBA, RGB16, N0f8
 using LinearAlgebra: norm
 using MultivariateStats: mean
 using StatsBase: quantile
-using BinaryParsingTools: read_binary, @tag_str
+using BinaryParsingTools: read_binary, @tag_str, Tag
 const WoW = WoWDataParser
 using Test
 
@@ -396,14 +396,33 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
       @test mohd.groups === 1
       @test mohd.portals === 0
       @test mohd.ambient_color === RGBA{N0f8}(0.043, 0.043, 0.043, 1.0)
-      @test mohd.bounding_box_corner_1 === (-12.8009205f0, -10.880446f0, -1.0901798f0)
-      @test mohd.bounding_box_corner_2 === (3.8274624f0, 10.880448f0, 10.920715f0)
+      @test mohd.bounding_box === WoWDataParser.BoundingBox((-12.8009205f0, -10.880446f0, -1.0901798f0), (3.8274624f0, 10.880448f0, 10.920715f0))
       motx = read(wmo, tag"MOTX")
       @test length(motx) === mohd.materials === 8
       texture = WoWDataParser.read_texture(wmo, 0)
       @test texture == motx[1]
       texture = WoWDataParser.read_texture(wmo, 106)
       @test texture == motx[3]
+      mogi = read(wmo, tag"MOGI")
+      @test length(mogi) === 1
+      group = mogi[1]
+      @test group.bounding_box === mohd.bounding_box
+      mogn = read(wmo, tag"MOGN")
+      @test mogn == ["stable01"]
+      mosb = read(wmo, tag"MOSB")
+      @test mosb === nothing
+      mods = read(wmo, tag"MODS")
+      @test length(mods) == 1
+      doodad_set = mods[1]
+      @test doodad_set.name === Tag{20}("Set_\$DefaultGlobal")
+      @test doodad_set.start === 0
+      @test doodad_set.count === 0
+      mfog = read(wmo, tag"MFOG")
+      @test length(mfog) == 1
+      fog = mfog[1]
+      @test fog.location === (0f0, 0f0, 0f0)
+      @test fog.normal.clear_value === RGBA{N0f8}(1.0, 1.0, 1.0, 1.0)
+      @test fog.underwater.clear_value === RGBA{N0f8}(1.0, 0.0, 0.0, 1.0)
 
       group = collection["World/wmo/Azeroth/Buildings/Westfall_Stable/Westfall_StableC_000.wmo"]
     end
