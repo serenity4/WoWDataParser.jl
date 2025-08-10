@@ -3,7 +3,7 @@ using WoWDataParser: RGBA, RGB16, N0f8
 using LinearAlgebra: norm
 using MultivariateStats: mean
 using StatsBase: quantile
-using BinaryParsingTools: read_binary
+using BinaryParsingTools: read_binary, @tag_str
 const WoW = WoWDataParser
 using Test
 
@@ -382,6 +382,30 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
       serialized = take!(seekstart(io))
       file2 = BLPFile(serialized)
       @test error_quantile(file.image, file2.image, 0.96) == 0.0
+    end
+  end
+
+  @testset "WMO files" begin
+    collection = MPQCollection([mpq_file("enUS/locale-enUS"), mpq_file("common"), mpq_file("lichking")])
+
+    @testset "Reading WMO files" begin
+      root = read(collection["World/wmo/Azeroth/Buildings/Westfall_Stable/Westfall_StableC.wmo"])
+      wmo = WMOFile(root)
+      mohd = read(wmo, tag"MOHD")
+      @test mohd.materials === 8
+      @test mohd.groups === 1
+      @test mohd.portals === 0
+      @test mohd.ambient_color === RGBA{N0f8}(0.043, 0.043, 0.043, 1.0)
+      @test mohd.bounding_box_corner_1 === (-12.8009205f0, -10.880446f0, -1.0901798f0)
+      @test mohd.bounding_box_corner_2 === (3.8274624f0, 10.880448f0, 10.920715f0)
+      motx = read(wmo, tag"MOTX")
+      @test length(motx) === mohd.materials === 8
+      texture = WoWDataParser.read_texture(wmo, 0)
+      @test texture == motx[1]
+      texture = WoWDataParser.read_texture(wmo, 106)
+      @test texture == motx[3]
+
+      group = collection["World/wmo/Azeroth/Buildings/Westfall_Stable/Westfall_StableC_000.wmo"]
     end
   end
 end;
