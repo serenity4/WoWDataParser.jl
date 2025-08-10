@@ -46,6 +46,8 @@ include("dbc/types.jl")
 include("dbc/read.jl")
 include("dbc/write.jl")
 
+include("show.jl")
+
 export
        @set,
        setproperties,

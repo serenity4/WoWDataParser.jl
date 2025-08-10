@@ -99,22 +99,6 @@ function listfile(collection::MPQCollection)
   list
 end
 
-function Base.show(io::IO, collection::MPQCollection)
-  print(io, MPQCollection, " (")
-  print(io, length(collection.archives), " archives opened")
-  print(io, ", ", length(collection.file_sources), " files in total")
-  print(io, ')')
-end
-
-function Base.show(io::IO, mime::MIME"text/plain", collection::MPQCollection)
-  isempty(collection.archives) && return print(io, MPQCollection, " (empty)")
-  print(io, MPQCollection, " with ", length(collection.file_sources), " files across ", length(collection.archives), " archives:")
-  for archive in collection.archives
-    print(io, "\n⚫ ")
-    show(io, mime, archive)
-  end
-end
-
 function MPQFile(collection::MPQCollection, filename::AbstractString)
   archive = get(collection.file_sources, canonicalize(filename), nothing)
   isnothing(archive) && error("No file named $(repr(filename)) exists in this collection.")

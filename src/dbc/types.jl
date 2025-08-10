@@ -20,13 +20,6 @@ DBCData(file::MPQFile) = read(DBCFile(file))
 
 Base.write(io::IO, data::DBCData) = write_dbc(io, data.rows)
 
-function Base.show(io::IO, data::DBCData)
-  n = length(data.rows)
-  print(io, typeof(data), " (")
-  print(io, "name: ", data.name)
-  print(io, ") with $n rows")
-end
-
 struct DBCFile
   name::Symbol
   data::Vector{UInt8}

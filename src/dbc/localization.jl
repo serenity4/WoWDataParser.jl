@@ -87,8 +87,6 @@ function LString(str::T, locale::Symbol = get_locale()) where {T<:AbstractString
   setproperties(LString(locale), NamedTuple{(locale,), Tuple{T}}((str,)))::LString
 end
 
-Base.show(io::IO, lstr::LString) = print(io, 'l', sprint(show, lstr[]))
-
 macro l_str(ex) :(LString($(esc(ex)))) end
 
 WoWBase.query_parameter(x::LString) = x[]
