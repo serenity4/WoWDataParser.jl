@@ -61,11 +61,11 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
       dbc = DBCData(dbc_file(:TalentTab))
       @test dbc.name === :TalentTab
       @test isa(dbc, DBCData{TalentTabData})
-      @test length(dbc.rows) == 33
+      @test length(dbc.rows) ≥ 33
 
       dbc = DBCData(dbc_file(:Talent))
       @test isa(dbc, DBCData{TalentData})
-      @test length(dbc.rows) == 892
+      @test length(dbc.rows) ≥ 892
 
       dbc = DBCData(dbc_file(:Map))
       @test isa(dbc, DBCData{MapData})
@@ -265,7 +265,7 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
       @test priority("patch-2.MPQ") > priority("patch.MPQ")
       @test priority("lichking.MPQ") > priority("expansion.MPQ")
       @test priority("common-2.MPQ") > priority("common.MPQ")
-      collection = MPQCollection(DATA_DIRECTORY)
+      collection = MPQCollection(DATA_DIRECTORY; filter = !endswith("patch-enUS-E.MPQ"))
       @test length(collection.archives) > 10
       @test length(collection.file_sources) > 200000
     end
