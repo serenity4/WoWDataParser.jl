@@ -10,6 +10,7 @@ using Test
 dbc_file(name) = joinpath(DBC_DIRECTORY, "$name.dbc")
 mpq_file(name) = joinpath(DATA_DIRECTORY, "$name.MPQ")
 error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), bound)
+extract_magic_number(file::Vector{UInt8}) = Tag{4}((file[1:4]...,))
 
 @testset "WoWDataParser.jl" begin
   @testset "Localization" begin
@@ -385,9 +386,11 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
     end
   end
 
+  collection = MPQCollection([mpq_file("enUS/locale-enUS"), mpq_file("common"), mpq_file("lichking")])
+
   @testset "ADT files" begin
-    collection = MPQCollection([mpq_file("enUS/locale-enUS"), mpq_file("common"), mpq_file("lichking")])
     file = read(collection["World/maps/Northrend/Northrend_24_17.adt"])
+    @test extract_magic_number(file) == tag"REVM"
     adt = ADTFile(file)
     @test length(adt.sizes) === 13
     @test length(adt.sizes[tag"MCNK"]) === 256
@@ -397,12 +400,16 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
     @test length(textures) ≥ 9
   end
 
-  @testset "WMO files" begin
-    collection = MPQCollection([mpq_file("enUS/locale-enUS"), mpq_file("common"), mpq_file("lichking")])
+  @testset "M2 files" begin
+    file = read(collection["Character/IceTroll/Male/IceTrollMale.M2"])
+    @test extract_magic_number(file) == tag"MD20"
+  end
 
+  @testset "WMO files" begin
     @testset "Reading WMO files" begin
-      root = read(collection["World/wmo/Azeroth/Buildings/Westfall_Stable/Westfall_StableC.wmo"])
-      wmo = WMOFile(root)
+      file = read(collection["World/wmo/Azeroth/Buildings/Westfall_Stable/Westfall_StableC.wmo"])
+      @test extract_magic_number(file) == tag"REVM"
+      wmo = WMOFile(file)
       mohd = read(wmo, tag"MOHD")
       @test mohd === wmo.header
       @test mohd.materials === 8
