@@ -5,11 +5,24 @@ WMOFile(bytes::AbstractVector) = WMOFile(IOBuffer(bytes))
 WMOFile(path::AbstractString) = finalizer(x -> close(x.io), WMOFile(open(path, "r")))
 WMOFile(io::IO) = read_binary(io, WMOFile)
 
+Base.getindex(wmo::WMOFile, name::Tag4) = read(wmo, name)
+
+function Base.getproperty(wmo::WMOFile, name::Symbol)
+  name === :header && return wmo[tag"MOHD"]
+  name === :textures && return wmo[tag"MOTX"]
+  name === :skybox && return wmo[tag"MOSB"]
+  name === :groups && return wmo[tag"MOGI"]
+  name === :group_names && return wmo[tag"MOGN"]
+  name === :doodads && return wmo[tag"MODS"]
+  name === :fog && return wmo[tag"MFOG"]
+  return getfield(wmo, name)
+end
+
 function Base.read(io::BinaryIO, ::Type{WMOFile})
   sizes = parse_chunk_sizes(io)
   data = Dictionary{Tag4,Any}()
   for chunk in keys(sizes)
-    insert!(data, chunk, nothing)
+    insert!(data, chunk, NoData())
   end
   WMOFile(io, sizes, data)
 end

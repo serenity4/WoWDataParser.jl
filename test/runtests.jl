@@ -392,12 +392,14 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
       root = read(collection["World/wmo/Azeroth/Buildings/Westfall_Stable/Westfall_StableC.wmo"])
       wmo = WMOFile(root)
       mohd = read(wmo, tag"MOHD")
+      @test mohd === wmo.header
       @test mohd.materials === 8
       @test mohd.groups === 1
       @test mohd.portals === 0
       @test mohd.ambient_color === RGBA{N0f8}(0.043, 0.043, 0.043, 1.0)
       @test mohd.bounding_box === WoWDataParser.BoundingBox((-12.8009205f0, -10.880446f0, -1.0901798f0), (3.8274624f0, 10.880448f0, 10.920715f0))
       motx = read(wmo, tag"MOTX")
+      @test motx === wmo.textures
       @test length(motx) === mohd.materials === 8
       texture = WoWDataParser.read_texture(wmo, 0)
       @test texture == motx[1]
@@ -405,19 +407,24 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
       @test texture == motx[3]
       mogi = read(wmo, tag"MOGI")
       @test length(mogi) === 1
+      @test mogi === wmo.groups
       group = mogi[1]
       @test group.bounding_box === mohd.bounding_box
       mogn = read(wmo, tag"MOGN")
+      @test mogn === wmo.group_names
       @test mogn == ["stable01"]
       mosb = read(wmo, tag"MOSB")
+      @test mosb === wmo.skybox
       @test mosb === nothing
       mods = read(wmo, tag"MODS")
+      @test mods === wmo.doodads
       @test length(mods) == 1
       doodad_set = mods[1]
       @test doodad_set.name === Tag{20}("Set_\$DefaultGlobal")
       @test doodad_set.start === 0
       @test doodad_set.count === 0
       mfog = read(wmo, tag"MFOG")
+      @test mfog === wmo.fog
       @test length(mfog) == 1
       fog = mfog[1]
       @test fog.location === (0f0, 0f0, 0f0)
