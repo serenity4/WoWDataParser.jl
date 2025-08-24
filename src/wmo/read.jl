@@ -27,17 +27,6 @@ function Base.read(io::BinaryIO, ::Type{WMOFile})
   WMOFile(io, sizes, data)
 end
 
-function parse_chunk_sizes(io::IO)
-  sizes = Dictionary{Tag4,Int64}()
-  while !eof(io)
-    chunk = Tag4(bswap(read(io, UInt32)))
-    size = Int64(read(io, UInt32))
-    insert!(sizes, chunk, size)
-    skip(io, size)
-  end
-  return sizes
-end
-
 function Base.read(wmo::WMOFile, chunk::Tag4)
   data = wmo.data[chunk]
   data !== NoData() && return data
@@ -65,27 +54,10 @@ function read_chunk(wmo::WMOFile, chunk::Tag4)
   return missing
 end
 
-function seek_chunk(wmo::WMOFile, chunk::Tag4)
-  offset = 8 # magic number + size
-  for (name, size) in pairs(wmo.sizes)
-    name === chunk && break
-    offset += size + 8
-  end
-  seek(wmo.io, offset)
-end
+seek_chunk(wmo::WMOFile, chunk::Tag4) = seek_chunk(wmo.io, wmo.sizes, chunk)
 
-function read_textures(wmo::WMOFile)
-  filenames = String[]
-  start = position(wmo.io)
-  size = wmo.sizes[tag"MOTX"]
-  while position(wmo.io) < start + size
-    while peek(wmo.io, UInt8) == 0 skip(wmo.io, 1) end
-    position(wmo.io) < start + size || break
-    filename = read_null_terminated_string(wmo.io)
-    push!(filenames, filename)
-  end
-  return filenames
-end
+read_textures(wmo::WMOFile) = read_filenames_from_chunk(wmo.io, wmo.sizes[tag"MOTX"])
+read_group_names(wmo::WMOFile) = read_filenames_from_chunk(wmo.io, wmo.sizes[tag"MOGN"])
 
 function read_texture(wmo::WMOFile, offset::Int64)
   seek_chunk(wmo, tag"MOTX")
@@ -99,19 +71,6 @@ function read_group_name(wmo::WMOFile, offset::Int64)
   skip(wmo.io, offset)
   while peek(wmo.io, UInt8) == 0 skip(wmo.io, 1) end
   return read_null_terminated_string(wmo.io)
-end
-
-function read_group_names(wmo::WMOFile)
-  names = String[]
-  start = position(wmo.io)
-  size = wmo.sizes[tag"MOGN"]
-  while position(wmo.io) < start + size
-    while peek(wmo.io, UInt8) == 0 skip(wmo.io, 1) end
-    position(wmo.io) < start + size || break
-    name = read_null_terminated_string(wmo.io)
-    push!(names, name)
-  end
-  return names
 end
 
 function read_groups(wmo::WMOFile)

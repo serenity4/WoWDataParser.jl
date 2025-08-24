@@ -385,6 +385,18 @@ error_quantile(x, y, bound) = quantile(reshape(norm.(y - x), (prod(size(x)))), b
     end
   end
 
+  @testset "ADT files" begin
+    collection = MPQCollection([mpq_file("enUS/locale-enUS"), mpq_file("common"), mpq_file("lichking")])
+    file = read(collection["World/maps/Northrend/Northrend_24_17.adt"])
+    adt = ADTFile(file)
+    @test length(adt.sizes) === 13
+    @test length(adt.sizes[tag"MCNK"]) === 256
+    chunk_infos = adt[tag"MCIN"]
+    @test size(chunk_infos) === (16, 16)
+    textures = adt[tag"MTEX"]
+    @test length(textures) ≥ 9
+  end
+
   @testset "WMO files" begin
     collection = MPQCollection([mpq_file("enUS/locale-enUS"), mpq_file("common"), mpq_file("lichking")])
 
